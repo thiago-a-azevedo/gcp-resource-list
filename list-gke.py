@@ -31,8 +31,8 @@ print ('project_id;project_name;cluster_name;master_version;locations;',
 'currentNodeCount;maxPodsPerNode;useIpAliases;clusterIpv4CidrBlock;ipRangeSizePod;',
 'servicesIpv4CidrBlock;ipRangeSizeService;NodesubnetRange;ipRangeSizeNode;', 
 'enablePrivateNodes;enablePrivateEndpoint;masterIpv4CidrBlock;privateEndpoint;',
-'publicEndpoint;dnsCacheConfig;',
-'loggingService;monitoringService;consumptionMeteringConfig;releaseChannel')
+'publicEndpoint;dnsCacheConfig;loggingService;"',
+'monitoringService;consumptionMeteringConfig;releaseChannel')
 
 zone='-'
 
