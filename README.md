@@ -14,9 +14,12 @@ Set your GCP credentials
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=/your-dir/your-credential.json 
 ```
-Permissions required:
-* ---
-* ---
+**Permissions required:**
+* cloudsql.instances.list
+* compute.instances.list
+* compute.zones.list
+* container.clusters.list
+* resourcemanager.projects.get
 
 If you review how to create a service account and JSON, please check the link [Creating and managing service account keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
