@@ -1,3 +1,4 @@
+# https://googleapis.github.io/google-api-python-client/docs/dyn/
 # https://developers.google.com/resources/api-libraries/documentation/container/v1/python/latest/container_v1.projects.zones.clusters.html
 
 import json
@@ -37,28 +38,52 @@ for project in client.list_projects(env_filter):
         
         resp = compute.instances().list(project=project.project_id, zone=zone.get('name')).execute()
         #print(resp)
-        #for instance in resp["items"]:
-            #if instance["networkInterfaces"][0]["networkIP"] == internal_ip:
-            #    internal_id = instance["id"]
-        
+         
         try:
             for gce in resp['items']:
                 diskAmt = diskSiz =0
+                ipAmt = 0
+                ipExt = 'None'
 
                 for disk in gce['disks']:
                     diskAmt +=1
                     diskSiz = diskSiz + float(disk.get('diskSizeGb'))
-                        
+
+                for accessConfig in gce['networkInterfaces']:
+                    #print(accessConfig)
+                    try:
+                        for nats in accessConfig['accessConfigs']:
+                            #print(nats)
+                            if nats.get('type',{}) == 'ONE_TO_ONE_NAT':
+                                ipExt=nats.get('natIP')                                            
+                                ipAmt +=1
+                                #print(ipExt)
+                    except KeyError: pass                                       
+                
+                machineTypeUrl=gce.get('machineType').split(sep="/")
+                machineType=machineTypeUrl[len(machineTypeUrl)-1]
+
                 
                 print (
                     project.project_id, ';',
-                    zone.get('name'),';',
                     project.name, ';',
+                    zone.get('name'),';',
                     gce.get('name'), ';',                 
-                    gce.get('kind'), ';',
+                    gce.get('cpuPlatform'), ';',
+                    machineType, ';',
+                    #gce.get('machineType').split(sep="/"), ';',
+                    gce.get('status'), ';',
+                    gce.get('lastStartTimestamp'), ';',
+                    gce.get('scheduling').get('preemptible'), ';',
+                    gce.get('scheduling').get('automaticRestart'), ';',
+                    gce.get('scheduling').get('onHostMaintenance'), ';',                    
                     diskAmt, ';',
                     diskSiz, ';',
+                    ipExt, ';',
+                    ipAmt, ';',
+                    gce.get('creationTimestamp')
                     )
+                
         except KeyError: pass
 
         #print(

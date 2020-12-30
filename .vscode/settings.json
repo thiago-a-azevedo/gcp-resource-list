@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/Users/tazevedo/mycode/gcp-list/gcp-resource-list/.venv/bin/python3",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

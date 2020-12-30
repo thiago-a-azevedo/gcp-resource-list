@@ -3,3 +3,4 @@ oauth2client
 google-cloud-resource-manager
 google_auth_oauthlib
 ipcalc
+requests
