@@ -1,5 +1,5 @@
-# https://googleapis.github.io/google-api-python-client/docs/dyn/
-# https://developers.google.com/resources/api-libraries/documentation/container/v1/python/latest/container_v1.projects.zones.clusters.html
+# List GKE clusters
+# Official GCP SDK (Python) Documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/
 
 import json
 import ipcalc
@@ -27,12 +27,12 @@ if project_Filter.project is None:
 else:
     env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
-
+# print csv header
 print ('project_id;project_name;cluster_name;master_version;locations;',
 'currentNodeCount;maxPodsPerNode;useIpAliases;clusterIpv4CidrBlock;ipRangeSizePod;',
 'servicesIpv4CidrBlock;ipRangeSizeService;NodesubnetRange;ipRangeSizeNode;', 
 'enablePrivateNodes;enablePrivateEndpoint;masterIpv4CidrBlock;privateEndpoint;',
-'publicEndpoint;dnsCacheConfig;loggingService;"',
+'publicEndpoint;dnsCacheConfig;loggingService;',
 'monitoringService;consumptionMeteringConfig;releaseChannel')
 
 zone='-'
@@ -40,7 +40,6 @@ zone='-'
 for project in client.list_projects(env_filter):
     req = service.projects().zones().clusters().list(projectId=project.project_id, zone=zone)
     resp = req.execute()
-    #print(resp)
  
     try: 
         for cluster in resp['clusters']:

@@ -1,5 +1,5 @@
-# https://googleapis.github.io/google-api-python-client/docs/dyn/
-# https://developers.google.com/resources/api-libraries/documentation/container/v1/python/latest/container_v1.projects.zones.clusters.html
+# List GKE nodes
+# Official GCP SDK (Python) Documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/
 
 import json
 import sys
@@ -52,9 +52,9 @@ for project in client.list_projects(env_filter):
                     node.get('config').get('machineType'),';',
                     node.get('config').get('diskSizeGb'),';',
                     node.get('config').get('diskType'),';',
-                    node.get('autoscaling').get('enabled'),';',
-                    node.get('autoscaling').get('minNodeCount'),';',
-                    node.get('autoscaling').get('maxNodeCount'),';',
+                    node.get('autoscaling',{}).get('enabled',{}),';',
+                    node.get('autoscaling',{}).get('minNodeCount',{}),';',
+                    node.get('autoscaling',{}).get('maxNodeCount',{}),';',
                     node.get('management').get('autoUpgrade'),';',
                     node.get('maxPodsConstraint').get('maxPodsPerNode'),';',
                     node.get('podIpv4CidrSize'),';',

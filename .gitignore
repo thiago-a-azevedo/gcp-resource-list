@@ -131,6 +131,7 @@ dmypy.json
 # Temp Log Files
 *.csv
 *.json
+*.sample
 
 # Vscode configs
 .vscode/

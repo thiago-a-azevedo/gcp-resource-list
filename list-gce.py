@@ -1,5 +1,5 @@
-# https://googleapis.github.io/google-api-python-client/docs/dyn/
-# https://developers.google.com/resources/api-libraries/documentation/container/v1/python/latest/container_v1.projects.zones.clusters.html
+# List GCE instances
+# Official GCP SDK (Python) Documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/
 
 import json
 import ipcalc
@@ -21,12 +21,15 @@ parser_args.add_argument('--project')
 
 project_Filter = parser_args.parse_args()
 
-
 if project_Filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
 else:
     env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
+# print csv header
+print ('project_id;project_name;zone;instance_name;cpuPlatform;machineType;',
+'status;lastStartTimestamp;preemptible;automaticRestart;onHostMaintenance;',
+'disk_amount;disk_total_size;publicIP;nic_amount;creationTimestamp')
 
 for project in client.list_projects(env_filter):
     
@@ -58,8 +61,7 @@ for project in client.list_projects(env_filter):
                 # Remove the full url for machineType
                 machineTypeUrl=gce.get('machineType').split(sep="/")
                 machineType=machineTypeUrl[len(machineTypeUrl)-1]
-
-                
+        
                 print (
                     project.project_id, ';',
                     project.name, ';',

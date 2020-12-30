@@ -1,5 +1,5 @@
-# https://googleapis.github.io/google-api-python-client/docs/dyn/
-# https://developers.google.com/resources/api-libraries/documentation/container/v1/python/latest/container_v1.projects.zones.clusters.html
+# List GCP project quotas
+# Official GCP SDK (Python) Documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/
 
 import json
 import ipcalc

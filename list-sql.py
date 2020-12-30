@@ -1,5 +1,5 @@
-# https://googleapis.github.io/google-api-python-client/docs/dyn/
-# https://developers.google.com/resources/api-libraries/documentation/sqladmin/v1beta4/python/latest/sqladmin_v1beta4.instances.html#update
+# List CloudSQL instances
+# Official GCP SDK (Python) Documentation: https://googleapis.github.io/google-api-python-client/docs/dyn/
 
 import json
 import sys
@@ -7,25 +7,6 @@ import argparse
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 from google.cloud import resource_manager
-
-'''
-Authenticating as an end user
-
-from google_auth_oauthlib import flow
-
-launch_browser = False
-SCOPES = ['https://www.googleapis.com/auth/cloud-platform.read-only', 'https://www.googleapis.com/auth/sqlservice.admin']
-appflow = flow.InstalledAppFlow.from_client_secrets_file(
-    "/Users/tazevedo/mycode/creds/client_secrets.json",SCOPES
-)
-
-if launch_browser:
-    appflow.run_local_server()
-else:
-    appflow.run_console()
-
-credentials = appflow.credentials
-'''
 
 client = resource_manager.Client()
 credentials = GoogleCredentials.get_application_default()
