@@ -27,7 +27,7 @@ if project_Filter.project is None:
 else:
     env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
-
+# Print csv Header
 print ('project_id; project_name;cluster_name;node_name;node_version;machineType;',
 'diskSizeGb;diskType;autoscaling;minNodeCount;maxNodeCount;autoUpgrade;maxPodsPerNode;', 
 'podIpv4CidrSize;locations')
@@ -37,9 +37,7 @@ zone='-'
 for project in client.list_projects(env_filter):
     req = service.projects().zones().clusters().list(projectId=project.project_id, zone=zone)
     resp = req.execute()
-    #print(resp)
- 
-
+    
     try: 
         for cluster in resp['clusters']:
             for node in cluster['nodePools']:

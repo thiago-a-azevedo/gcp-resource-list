@@ -132,6 +132,7 @@ dmypy.json
 *.csv
 *.json
 *.sample
+*.txt
 
 # Vscode configs
 .vscode/

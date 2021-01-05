@@ -10,7 +10,7 @@ pip install -r requirements.txt
 ```
 ## Listing your GCP components
 
-Set your GCP credentials
+Set your GCP credentials. Reference[GCP Default Credentials](https://developers.google.com/accounts/docs/application-default-credentials)
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=/your-dir/your-credential.json 
 ```
