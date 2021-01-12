@@ -32,8 +32,8 @@ print ('project_id;project_name;cluster_name;master_version;locations;',
 'currentNodeCount;maxPodsPerNode;useIpAliases;clusterIpv4CidrBlock;ipRangeSizePod;',
 'servicesIpv4CidrBlock;ipRangeSizeService;NodesubnetRange;ipRangeSizeNode;', 
 'enablePrivateNodes;enablePrivateEndpoint;masterIpv4CidrBlock;privateEndpoint;',
-'publicEndpoint;dnsCacheConfig;loggingService;',
-'monitoringService;consumptionMeteringConfig;releaseChannel')
+'publicEndpoint;dnsCacheConfig;loggingService;monitoringService;',
+'consumptionMeteringConfig;dnsCacheConfig;releaseChannel')
 
 zone='-'
 
@@ -53,8 +53,12 @@ for project in client.list_projects(env_filter):
             
             # IP Range Calculation 
             # -4 Reserved IPs: Network,Default gateway,Second-to-last address,Broadcast
-            ipRangePodSize=ipcalc.Network(cluster.get('ipAllocationPolicy',{}).get('clusterIpv4CidrBlock')).size()-4
-            ipRangeServiceSize=ipcalc.Network(cluster.get('ipAllocationPolicy',{}).get('servicesIpv4CidrBlock')).size()-4
+            
+            if cluster.get('ipAllocationPolicy',{}).get('clusterIpv4CidrBlock') is not None:
+                ipRangePodSize=ipcalc.Network(cluster.get('ipAllocationPolicy',{}).get('clusterIpv4CidrBlock')).size()-4
+                ipRangeServiceSize=ipcalc.Network(cluster.get('ipAllocationPolicy',{}).get('servicesIpv4CidrBlock')).size()-4
+            else:
+                ipRangePodSize = ipRangeServiceSize = None
 
             print(
             project.project_id, ';',
@@ -80,7 +84,8 @@ for project in client.list_projects(env_filter):
             cluster.get('loggingService') ,';',
             cluster.get('monitoringService'),';', 
             cluster.get('consumptionMeteringConfig'),';',
-            cluster.get('releaseChannel',{}).get('channel')
+            cluster.get('addonsConfig',{}).get('dnsCacheConfig',{}).get('enabled','None'),';',
+            cluster.get('releaseChannel',{}).get('channel')            
             )
     except KeyError: pass
    

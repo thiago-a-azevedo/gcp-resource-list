@@ -53,8 +53,8 @@ for project in client.list_projects(env_filter):
                     node.get('autoscaling',{}).get('enabled',{}),';',
                     node.get('autoscaling',{}).get('minNodeCount',{}),';',
                     node.get('autoscaling',{}).get('maxNodeCount',{}),';',
-                    node.get('management').get('autoUpgrade'),';',
-                    node.get('maxPodsConstraint').get('maxPodsPerNode'),';',
+                    node.get('management',{}).get('autoUpgrade',{}),';',
+                    node.get('maxPodsConstraint',{}).get('maxPodsPerNode',{}),';',
                     node.get('podIpv4CidrSize'),';',
                     node.get('locations')
                     )
