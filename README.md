@@ -50,3 +50,10 @@ List the project Quotas in a CSV format.
 List the project Quotas, regional level, in a CSV format.
 ### list-inc.py
 List public GCP incidents based in a CSV format, based on [GCP Status page](https://status.cloud.google.com/)
+
+
+## To Do
+* PubSub scripts
+* MemoryStore scripts
+* Review Project filter to support comma delimited
+* Review GKE subnet sizing
