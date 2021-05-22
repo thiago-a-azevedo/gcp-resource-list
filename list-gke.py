@@ -25,7 +25,7 @@ project_Filter = parser_args.parse_args()
 if project_Filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
 else:
-    env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
+    env_filter = {'projectId': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
 # print csv header
 print ('project_id;project_name;cluster_name;master_version;locations;',
@@ -33,7 +33,7 @@ print ('project_id;project_name;cluster_name;master_version;locations;',
 'servicesIpv4CidrBlock;ipRangeSizeService;NodesubnetRange;ipRangeSizeNode;', 
 'enablePrivateNodes;enablePrivateEndpoint;masterIpv4CidrBlock;privateEndpoint;',
 'publicEndpoint;dnsCacheConfig;loggingService;monitoringService;',
-'consumptionMeteringConfig;dnsCacheConfig;releaseChannel')
+'consumptionMeteringConfig;releaseChannel')
 
 zone='-'
 
@@ -80,11 +80,10 @@ for project in client.list_projects(env_filter):
             cluster.get('privateClusterConfig',{}).get('masterIpv4CidrBlock'),';',
             cluster.get('privateClusterConfig',{}).get('privateEndpoint'),';',
             cluster.get('privateClusterConfig',{}).get('publicEndpoint'),';',
-            cluster.get('addonsConfig',{}).get('dnsCacheConfig',{}).get('enabled'),';',
+            cluster.get('addonsConfig',{}).get('dnsCacheConfig',{}).get('enabled','None'),';',
             cluster.get('loggingService') ,';',
             cluster.get('monitoringService'),';', 
             cluster.get('consumptionMeteringConfig'),';',
-            cluster.get('addonsConfig',{}).get('dnsCacheConfig',{}).get('enabled','None'),';',
             cluster.get('releaseChannel',{}).get('channel')            
             )
     except KeyError: pass

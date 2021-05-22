@@ -23,7 +23,7 @@ project_Filter = parser_args.parse_args()
 if project_Filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
 else:
-    env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
+    env_filter = {'projectId': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
 
 print ('project_name;project_id;instance_name;tier;dbversion;backendType;state;replicationType;'

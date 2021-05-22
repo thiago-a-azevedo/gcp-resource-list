@@ -24,7 +24,7 @@ project_Filter = parser_args.parse_args()
 if project_Filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
 else:
-    env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
+    env_filter = {'projectId': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
 # print csv header
 print ('project_id;project_name;metric;limit;usage')
