@@ -16,33 +16,39 @@ compute = discovery.build('compute', 'v1', credentials=credentials)
 
 # Filter of Projects that will be scanned 
 parser_args = argparse.ArgumentParser(description='Define the projetc_id filter.'
-'if empity will looking for all the active project_id that the credential have access')
+'if empity will looking for all the active project_id that the credential have access.'
+'Support for comma separeted projects')
 parser_args.add_argument('--project')
+project_filter = parser_args.parse_args()
 
-project_Filter = parser_args.parse_args()
-
-if project_Filter.project is None:
+# Project parameter validation
+project_valid = []
+if project_filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
+    for project_param in client.list_projects(env_filter):
+        project_valid.append(project_param.project_id)
 else:
-    env_filter = {'projectId': project_Filter.project ,'lifecycleState': 'ACTIVE' }
+    project_list = project_filter.project.split(',')
+    for project_listed in project_list:
+        env_filter = {'projectId': project_listed ,'lifecycleState': 'ACTIVE' }
+        for project_param in client.list_projects(env_filter):
+            project_valid.append(project_param.project_id)
 
 # print csv header
-print ('project_id;project_name;zone;instance_name;cpuPlatform;machineType;',
+print ('project_id;zone;instance_name;cpuPlatform;machineType;',
 'status;lastStartTimestamp;preemptible;automaticRestart;onHostMaintenance;',
 'disk_amount;disk_total_size;publicIP;nic_amount;creationTimestamp')
 
-project_list = client.list_projects(env_filter)
-
-for project in client.list_projects(env_filter):
-    
+for project_validated in project_valid:
     try:
-        zone_request = compute.zones().list(project=project.project_id)        
+        zone_request = compute.zones().list(project=project_validated)        
         zones = zone_request.execute()
+        #print(zones)
 
         for zone in zones['items']:
 
-            resp = compute.instances().list(project=project.project_id, zone=zone.get('name')).execute()
-            
+            resp = compute.instances().list(project=project_validated, zone=zone.get('name')).execute()
+            #print(resp)
             try:
                 for gce in resp['items']:
                     diskAmt = diskSiz =0
@@ -65,9 +71,10 @@ for project in client.list_projects(env_filter):
                     machineTypeUrl=gce.get('machineType').split(sep="/")
                     machineType=machineTypeUrl[len(machineTypeUrl)-1]
             
+                    
                     print (
-                        project.project_id, ';',
-                        project.name, ';',
+                        project_validated, ';',
+                        #project.name, ';',
                         zone.get('name'),';',
                         gce.get('name'), ';',                 
                         gce.get('cpuPlatform'), ';',
@@ -83,6 +90,7 @@ for project in client.list_projects(env_filter):
                         ipAmt, ';',
                         gce.get('creationTimestamp')
                         )
+                        
                     
             except KeyError: pass
     except: pass
