@@ -25,12 +25,12 @@ project_Filter = parser_args.parse_args()
 if project_Filter.project is None:
     env_filter = {'lifecycleState': 'ACTIVE' }
 else:
-    env_filter = {'name': project_Filter.project ,'lifecycleState': 'ACTIVE' }
+    env_filter = {'projectId': project_Filter.project ,'lifecycleState': 'ACTIVE' }
 
 # Print csv Header
-print ('project_id; project_name;cluster_name;node_name;node_version;machineType;',
-'diskSizeGb;diskType;autoscaling;minNodeCount;maxNodeCount;autoUpgrade;maxPodsPerNode;', 
-'podIpv4CidrSize;locations')
+print ('project_id; project_name;cluster_name;node_name;node_version;status;autopilot;image_type;',
+'preemptible;machineType;diskSizeGb;diskType;autoscaling;minNodeCount;maxNodeCount;autoUpgrade;autoRepair;', 
+'maxPodsPerNode;podIpv4CidrSize;locations')
 
 zone='-'
 
@@ -47,6 +47,10 @@ for project in client.list_projects(env_filter):
                     cluster.get('name'),';',
                     node.get('name'),';',
                     node.get('version'),';',
+                    node.get('status'),';',
+                    node.get('autopilot'),';',
+                    node.get('config').get('imageType'),';',
+                    node.get('config').get('preemptible'),';',
                     node.get('config').get('machineType'),';',
                     node.get('config').get('diskSizeGb'),';',
                     node.get('config').get('diskType'),';',
@@ -54,6 +58,7 @@ for project in client.list_projects(env_filter):
                     node.get('autoscaling',{}).get('minNodeCount',{}),';',
                     node.get('autoscaling',{}).get('maxNodeCount',{}),';',
                     node.get('management',{}).get('autoUpgrade',{}),';',
+                    node.get('management',{}).get('autoRepair',{}),';',
                     node.get('maxPodsConstraint',{}).get('maxPodsPerNode',{}),';',
                     node.get('podIpv4CidrSize'),';',
                     node.get('locations')
