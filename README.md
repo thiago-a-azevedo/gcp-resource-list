@@ -36,6 +36,9 @@ python3 list-gce.py --project my-project-id
 
 ## Scripts
 
+
+### list-vpc.py
+List the VPC components in a CSV format.
 ### list-gce.py
 List the GCE components in a CSV format.
 ### list-gke.py
