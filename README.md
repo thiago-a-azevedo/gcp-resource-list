@@ -3,7 +3,7 @@ If you need a consolidated list of your GCP components, these scripts can help y
 
 Based on the python GCP SDK, you can check a list(\*.csv) of components (GCE, GKE, ClouSQL, Quota) of all the projects that you have access to, including some key properties that can help you to review operational analysis.
 
-## Setup
+## SETUP
 After you download or clone the repository, install the pip requirements, and run the list* script related to the components you want to check.
 ```bash
 pip install -r requirements.txt
