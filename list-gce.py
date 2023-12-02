@@ -7,6 +7,8 @@ import argparse
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 from google.cloud import resource_manager
+from google.auth import compute_engine  # Para manejar autenticación de Google
+
 
 client = resource_manager.Client()
 
